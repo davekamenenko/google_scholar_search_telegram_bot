@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\webda\PycharmProjects\google_search_bot\venv"
+VIRTUAL_ENV="C:\Users\webda\PycharmProjects\google_tg_bot\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
