@@ -97,7 +97,15 @@ def welcome(message):
     animals_plants = "животноводство, специальное животноводство,растениеводство,растения и животные,растения регенеранты,растения регенеранты адаптации,растение животное,животный мир,животных и птицы"
     electrical_appliances = "электроприборостроение,электроприбор,электрический двигатель,тесла"
     trips = "мексика и сша,сша,швейцария население,сша быт,культуры чехии,польша традиции,украина праздники"
-    biology = "биология и медицина,биология и экология,биологизация,биологизация производства,биологизация земледелия,биологизация культур,биологические свойства почвы,океанология,биология клетки,биология и химия"
+    Exhibition = "выставка форум,концертмейстер,концертные программы,концертная жизнь,концерты,Выставки"
+    treatment = "врачевание,врачевание исскуство, врачевание медицина, врачевание все времена,врачебная ошибка,медсестра,медсестра анестезист,медсестринский уход"
+    calculus = "математические исчисления,математический анализ,математические знания"
+    biology = "биология и медицина,биология и экология,биологизация,биологизация производства,биологизация земледелия,биологизация культур,биологические свойства почвы,океанология,биология клетки,биология и химия,химиотерапия,химическая промышленность"
+    repair = "починка элекроприбора,электроприбор ремонт,электроприбор обслуживание"
+    science = "наука и техника,календарь выставок,наука и технология,научно технический прогресс,научный анализ"
+    physics = "физикализм,физика,ньютон,законы физики,физика ультразвука,наночастицы,атомы,фотоны"
+    biographies = "биография ньютона,биография ома,биография пифагора,биография ученых,учебник истории,учебник физики"
+    nature = "природа,радуга,природные явления,природный газ,природный потенциал"
 
     conn = sqlite3.connect('bd.db')
     cursor = conn.cursor()
@@ -105,78 +113,209 @@ def welcome(message):
     conn.commit()
     result = query.fetchone();
     print(result)
-    print(result)
     if (result != None):
         interes = result[2].split()
         while(1):
             interes_select = random.randint(0, len(interes)-1)
-            print(interes_select)
+
             print(interes[interes_select])
+            print(interes_select)
             if(interes[interes_select] == "yes"):
-                if(interes_select == 0):
+                if (interes_select == 0):
                     params_rec["q"] = math[random.randint(0, (len(math) - 1))]
                     search = GoogleSearch(params)
                     results = search.get_dict()
                     print(results)
                     if ("organic_results" in results.keys()):
                         try:
-                            results_1 = results['organic_results']
-                            i = random.randint(0,10)
+                            i = random.randint(0, 10)
                             bot.send_message(message.chat.id,
                                              f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
                                              parse_mode="HTML")
+                            break
                         except KeyError:
                             continue
-                    if (interes_select == 1):
-                        params_rec["q"] = animals_plants[random.randint(0, (len(animals_plants) - 1))]
-                        search = GoogleSearch(params)
-                        results = search.get_dict()
-                        print(results)
-                        if ("organic_results" in results.keys()):
-                            try:
-                                i = random.randint(0,10)
-                                bot.send_message(message.chat.id,
-                                                 f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
-                                                 parse_mode="HTML")
-                            except KeyError:
-                                continue
-                    if (interes_select == 2):
-                        params_rec["q"] = electrical_appliances[random.randint(0, (len(electrical_appliances) - 1))]
-                        search = GoogleSearch(params)
-                        results = search.get_dict()
-                        print(results)
-                        if ("organic_results" in results.keys()):
-                            try:
-                                i = random.randint(0, 10)
-                                bot.send_message(message.chat.id,
-                                                 f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
-                                                 parse_mode="HTML")
-                            except KeyError:
-                                continue
-                    if (interes_select == 3):
-                        params_rec["q"] = trips[random.randint(0, (len(trips) - 1))]
-                        search = GoogleSearch(params)
-                        results = search.get_dict()
-                        print(results)
-                        if ("organic_results" in results.keys()):
-                            try:
-                                i = random.randint(0, 10)
-                                bot.send_message(message.chat.id,
-                                                 f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
-                                                 parse_mode="HTML")
-                            except KeyError:
-                                continue
+                if (interes_select == 1):
+                    bot.send_message(message.chat.id, "1")
+                    params_rec["q"] = animals_plants[random.randint(0, (len(animals_plants) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 2):
+                    params_rec["q"] = electrical_appliances[random.randint(0, (len(electrical_appliances) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 3):
+                    params_rec["q"] = trips[random.randint(0, (len(trips) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 4):
+                    params_rec["q"] = Exhibition[random.randint(0, (len(Exhibition) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 5):
+                    params_rec["q"] = treatment[random.randint(0, (len(treatment) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 6):
+                    params_rec["q"] = calculus[random.randint(0, (len(calculus) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 7):
+                    params_rec["q"] = biology[random.randint(0, (len(biology) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 8):
+                    params_rec["q"] = repair[random.randint(0, (len(repair) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 9):
+                    params_rec["q"] = science[random.randint(0, (len(science) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 10):
+                    params_rec["q"] = physics[random.randint(0, (len(physics) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 11):
+                    params_rec["q"] = biographies[random.randint(0, (len(biographies) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
+                if (interes_select == 12):
+                    params_rec["q"] = nature[random.randint(0, (len(nature) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            i = random.randint(0, 10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                            break
+                        except KeyError:
+                            continue
 
-                bot.send_message(message.chat.id, "Головна - /start")
-                cursor.close()
-                print(result[2])
-                break
+
+            cursor.close()
+            print(result[2])
+
             if (interes[interes_select] == "no"):
-                bot.send_message(message.chat.id, "Головна no - /start")
-                break
+                continue
+
 
     if (result == None):
         bot.send_message(message.chat.id, "Спочатку пройдiть тест - /my_test")
+    bot.send_message(message.chat.id, "Головна - /start")
 
 @bot.message_handler(commands=['my_test'])
 def welcome(message):
