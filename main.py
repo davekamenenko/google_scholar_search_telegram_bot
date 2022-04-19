@@ -1,9 +1,16 @@
+import random
 import time
 import telebot
 import  sqlite3
 from serpapi import GoogleSearch
 from telebot import types
 params = {
+  "api_key": "8e952a1324a7b295488f7ed8c8b5a414f3b1109b1f97ffe59fc3555eb28112f7",
+  "engine": "google_scholar",
+  "q": "milk",
+  "hl": "ru"
+}
+params_rec = {
   "api_key": "8e952a1324a7b295488f7ed8c8b5a414f3b1109b1f97ffe59fc3555eb28112f7",
   "engine": "google_scholar",
   "q": "milk",
@@ -20,7 +27,7 @@ bot = telebot.TeleBot('5305923588:AAG8GHSnlwwTquj-h5UnfgpK0QtXfBzNRCA')
 @bot.message_handler(commands=['start'])
 def welcome(message):
     mention = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
-    bot.send_message(message.chat.id, f"Ласкаво просимо, {mention}! Швидкі команди: \n/find_content - пошук статей \n/my_test - тест для формування iнтересiв \n/find_users - пошук однодумцiв", parse_mode="HTML")
+    bot.send_message(message.chat.id, f"Ласкаво просимо, {mention}! Швидкі команди: \n/find_content - пошук статей \n/my_test - тест для формування iнтересiв \n/find_users - пошук однодумцiв\n/rec - генератор рекомендованаого", parse_mode="HTML")
 
 
 
@@ -84,6 +91,92 @@ def welcome(message):
             print(result[2])
     if (result == None):
         bot.send_message(message.chat.id, "Спочатку пройдiть тест - /my_test")
+@bot.message_handler(commands=['rec'])
+def welcome(message):
+    math = "математика и физика,математическое моделирование,математический анализ,математическая статистика,физико химические свойства структура,физико химические методы"
+    animals_plants = "животноводство, специальное животноводство,растениеводство,растения и животные,растения регенеранты,растения регенеранты адаптации,растение животное,животный мир,животных и птицы"
+    electrical_appliances = "электроприборостроение,электроприбор,электрический двигатель,тесла"
+    trips = "мексика и сша,сша,швейцария население,сша быт,культуры чехии,польша традиции,украина праздники"
+    biology = "биология и медицина,биология и экология,биологизация,биологизация производства,биологизация земледелия,биологизация культур,биологические свойства почвы,океанология,биология клетки,биология и химия"
+
+    conn = sqlite3.connect('bd.db')
+    cursor = conn.cursor()
+    query = cursor.execute("SELECT * FROM `users` WHERE `user_id` = ?", (message.from_user.id,))
+    conn.commit()
+    result = query.fetchone();
+    print(result)
+    print(result)
+    if (result != None):
+        interes = result[2].split()
+        while(1):
+            interes_select = random.randint(0, len(interes)-1)
+            print(interes_select)
+            print(interes[interes_select])
+            if(interes[interes_select] == "yes"):
+                if(interes_select == 0):
+                    params_rec["q"] = math[random.randint(0, (len(math) - 1))]
+                    search = GoogleSearch(params)
+                    results = search.get_dict()
+                    print(results)
+                    if ("organic_results" in results.keys()):
+                        try:
+                            results_1 = results['organic_results']
+                            i = random.randint(0,10)
+                            bot.send_message(message.chat.id,
+                                             f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                             parse_mode="HTML")
+                        except KeyError:
+                            continue
+                    if (interes_select == 1):
+                        params_rec["q"] = animals_plants[random.randint(0, (len(animals_plants) - 1))]
+                        search = GoogleSearch(params)
+                        results = search.get_dict()
+                        print(results)
+                        if ("organic_results" in results.keys()):
+                            try:
+                                i = random.randint(0,10)
+                                bot.send_message(message.chat.id,
+                                                 f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                                 parse_mode="HTML")
+                            except KeyError:
+                                continue
+                    if (interes_select == 2):
+                        params_rec["q"] = electrical_appliances[random.randint(0, (len(electrical_appliances) - 1))]
+                        search = GoogleSearch(params)
+                        results = search.get_dict()
+                        print(results)
+                        if ("organic_results" in results.keys()):
+                            try:
+                                i = random.randint(0, 10)
+                                bot.send_message(message.chat.id,
+                                                 f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                                 parse_mode="HTML")
+                            except KeyError:
+                                continue
+                    if (interes_select == 3):
+                        params_rec["q"] = trips[random.randint(0, (len(trips) - 1))]
+                        search = GoogleSearch(params)
+                        results = search.get_dict()
+                        print(results)
+                        if ("organic_results" in results.keys()):
+                            try:
+                                i = random.randint(0, 10)
+                                bot.send_message(message.chat.id,
+                                                 f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                                 parse_mode="HTML")
+                            except KeyError:
+                                continue
+
+                bot.send_message(message.chat.id, "Головна - /start")
+                cursor.close()
+                print(result[2])
+                break
+            if (interes[interes_select] == "no"):
+                bot.send_message(message.chat.id, "Головна no - /start")
+                break
+
+    if (result == None):
+        bot.send_message(message.chat.id, "Спочатку пройдiть тест - /my_test")
 
 @bot.message_handler(commands=['my_test'])
 def welcome(message):
@@ -108,20 +201,32 @@ def welcome(message):
         markup.add(item1, item2)
 
         bot.send_message(message.chat.id, "Чи подобається тобі дізнаватися про відкриття в галузі фізики та математики?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі дивитися передачі про життя рослин та тварин?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі з'ясовувати пристрій електроприладів?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі дивитися передачі про життя людей у   різних країнах?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі бувати на виставках, концертах, виставах?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі спостерігати за роботою медсестри, лікаря?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі займатися математичними розрахунками та обчисленнями?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі дізнаватися про відкриття в галузі хімії та біології?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі ремонтувати побутові електроприлади?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі відвідувати технічні виставки, знайомитися з досягненнями науки та техніки?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі проводити досліди з фізики?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі читати біографії відомих політиків, книги з історії?",reply_markup=markup)
+        time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі помічати та пояснювати природні явища?",reply_markup=markup)
 
-        time.sleep(40)
+        time.sleep(70)
 
         uz = (user['mention'],user['test'])
         cursor.execute("INSERT INTO users (user_id, result) VALUES(?, ?);", uz)
