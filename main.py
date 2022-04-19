@@ -27,7 +27,7 @@ bot = telebot.TeleBot('5305923588:AAG8GHSnlwwTquj-h5UnfgpK0QtXfBzNRCA')
 @bot.message_handler(commands=['start'])
 def welcome(message):
     mention = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
-    bot.send_message(message.chat.id, f"Ласкаво просимо, {mention}! Швидкі команди: \n/find_content - пошук статей \n/my_test - тест для формування iнтересiв \n/find_users - пошук однодумцiв\n/rec - генератор рекомендованаого", parse_mode="HTML")
+    bot.send_message(message.chat.id, f"Ласкаво просимо, {mention}! Швидкі команди: \n/find_content - пошук статей \n/my_test - тест для формування iнтересiв \n/find_users - пошук однодумцiв\n/rec - генератор рекомендаций", parse_mode="HTML")
 
 
 
@@ -365,7 +365,7 @@ def welcome(message):
         time.sleep(5)
         bot.send_message(message.chat.id, "Чи подобається тобі помічати та пояснювати природні явища?",reply_markup=markup)
 
-        time.sleep(70)
+        time.sleep(5)
 
         uz = (user['mention'],user['test'])
         cursor.execute("INSERT INTO users (user_id, result) VALUES(?, ?);", uz)
