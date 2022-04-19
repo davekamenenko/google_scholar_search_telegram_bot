@@ -36,11 +36,17 @@ def welcome(message):
         print(results)
         if("organic_results" in results.keys()):
             results_1 = results['organic_results']
-            print(results_1)
+
             i = 0
             while i < 10:
-                bot.send_message(message.chat.id, f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results_1[i]['link'])}", parse_mode="HTML")
-                i = i + 1
+                try:
+                    bot.send_message(message.chat.id,
+                                     f"<b>{str(results['organic_results'][i]['title'])}</b> \n\n{str(results['organic_results'][i]['snippet'])} \n\nССЫЛКА: {str(results['organic_results'][i]['link'])}",
+                                     parse_mode="HTML")
+                    i = i + 1
+                except KeyError:
+                    i = i + 1
+
             bot.send_message(message.chat.id, "Kiнець. Повернутись в меню - /start")
         elif("organic_results" not in results.keys()):
             bot.send_message(message.chat.id, "Помилковий запит, спробуйте ще раз - /find_content")
