@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Bot -> User: Authentication Request
+User --> Bot: Authentication Response
+
+User -> Bot: /start command Request
+User <-- Bot: /start command Response
+
+User -> Bot: /find_content command Request
+User <-- Bot: /find_content command Response
+
+User -> Bot: /my_test command Request
+User <-- Bot: /my_test command Response
+
+User -> Bot: /find_users command Request
+User <-- Bot: /find_users command Response
+
+User -> Bot: /rec  command Request
+User <-- Bot: /rec  command Response
+
+
+
+@enduml
