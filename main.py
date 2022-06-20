@@ -22,7 +22,7 @@ user = {
 }
 result = ""
 
-bot = telebot.TeleBot('5483425646:AAHT0og_q4YiMqB9Kkvu5m99AIrTtnNmLwg')
+bot = telebot.TeleBot('5305923588:AAG8GHSnlwwTquj-h5UnfgpK0QtXfBzNRCA')
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
